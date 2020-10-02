@@ -47,7 +47,7 @@ export default function Login({ navigation }) {
           style={{ marginTop: 30 }}
           onPress={async () => {
             if (await onSignIn(cnpj, login, password)) {
-              navigation.navigate("Report", {});
+              navigation.navigate("Home", {});
             } else {
               alert("Dados inválidos");
             }
