@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { View, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { onSignIn } from "../../services/auth";
 import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
 import styles from "./style";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [cnpj, setCnpj] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +43,16 @@ export default function Login() {
           onChangeText={setPassword}
           password={true}
         />
-        <Button style={{ marginTop: 30 }} />
+        <Button
+          style={{ marginTop: 30 }}
+          onPress={async () => {
+            if (await onSignIn(cnpj, login, password)) {
+              navigation.navigate("Report", {});
+            } else {
+              alert("Dados inválidos");
+            }
+          }}
+        />
       </KeyboardAwareScrollView>
     </View>
   );
